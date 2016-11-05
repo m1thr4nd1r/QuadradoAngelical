@@ -39,16 +39,16 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            if (!flying)
-                body.velocity += Vector2.right * 2;
+            if (!flying && body.velocity.magnitude < 2f)
+                body.velocity += Vector2.right;
             else if (transform.position.x <= Screen.width / 2)
                 body.velocity = flyingVelocity;
         }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            if (!flying)
-                body.velocity += Vector2.left * 2;
+            if (!flying && body.velocity.magnitude < 2f)
+                body.velocity += Vector2.left;
             else if (transform.position.x > Screen.width / 2)
                 body.velocity = flyingVelocity;
         }
