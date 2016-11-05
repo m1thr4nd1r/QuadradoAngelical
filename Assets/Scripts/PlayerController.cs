@@ -42,23 +42,25 @@ public class PlayerController : MonoBehaviour {
         {
             if (!flying && body.velocity.magnitude < 2f)
                 body.velocity += Vector2.right;
-            else if (flying && Camera.main.WorldToScreenPoint(transform.position).x <= Screen.width / 2 && wallJump)
+            else if (Camera.main.WorldToScreenPoint(transform.position).x <= Screen.width / 2 && wallJump)
+            {
+                transform.Rotate(Vector3.up * 180);
+                flying = true;
+                flyingVelocity.Set(-flyingVelocity.x, flyingVelocity.y);
                 body.velocity = flyingVelocity;
+            }
         }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            if (flying)
-                print("Flying: " + flying + "\nCalc: " + (transform.position.x <= Screen.width / 2) + "\nWallJump: " + wallJump);
-
             if (!flying && body.velocity.magnitude < 2f)
                 body.velocity += Vector2.left;
             else if (Camera.main.WorldToScreenPoint(transform.position).x > Screen.width / 2 && wallJump)
             {
+                transform.Rotate(Vector3.up * 180);
                 flying = true;
-                print("Chego");
                 flyingVelocity.Set(-flyingVelocity.x, flyingVelocity.y);
-                body.velocity = -flyingVelocity;
+                body.velocity = flyingVelocity;
             }
         }
 
@@ -77,8 +79,12 @@ public class PlayerController : MonoBehaviour {
             flying = false;
             body.velocity = Vector2.zero;
         }
+
         if (coll.gameObject.tag.Equals("Obstacle"))
+        {
             jumpCount = 0;
+            flyingVelocity.Set(2.5f, 0.5f);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D coll)
