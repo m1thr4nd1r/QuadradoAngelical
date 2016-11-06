@@ -1,11 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" backgroundcolor="#b0eb00" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" backgroundcolor="#b0eb00" nextobjectid="3">
  <tileset firstgid="1" name="tilemap" tilewidth="16" tileheight="16">
   <image source="tilemap.png" width="64" height="128"/>
+  <tile id="0">
+   <objectgroup draworder="index">
+    <object id="0" x="2.09091" y="4.18182" width="13.9091" height="9.09091"/>
+   </objectgroup>
+  </tile>
+  <tile id="1">
+   <objectgroup draworder="index">
+    <object id="0" x="-0.0909091" y="3.90909" width="14" height="8.81818"/>
+   </objectgroup>
+  </tile>
+  <tile id="2">
+   <objectgroup draworder="index">
+    <object id="0" x="-0.272727" y="0.272727">
+     <polygon points="0.454545,0.0909091 15.9091,-0.181818 14.5455,7.72727 12.9091,11.2727 9.63636,14.0909 6.63636,15.1818 0.363636,15.3636"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="3">
+   <objectgroup draworder="index">
+    <object id="0" x="2.90909" y="0" width="13" height="15.9091"/>
+   </objectgroup>
+  </tile>
+  <tile id="6">
+   <objectgroup draworder="index">
+    <object id="0" x="0.0909091" y="4.18182" width="15.7273" height="11.9091"/>
+   </objectgroup>
+  </tile>
+  <tile id="7">
+   <objectgroup draworder="index">
+    <object id="0" x="0.0909091" y="-0.0909091">
+     <polygon points="0,0 15.3636,0.0909091 12.2727,11.4545 7.27273,14.2727 0,15.3636"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="10">
+   <objectgroup draworder="index">
+    <object id="0" x="-76" y="-35" width="131" height="88"/>
+   </objectgroup>
+  </tile>
  </tileset>
  <layer name="Camada de Tiles 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
    eJzt290NgjAYhtEvwUTGchRHcRRHcTRNvBVSasU3ek7SW1p4LvivAgAAAAAAAAAAAAAAAAAAAAAAAABghLnqdqw67TUe852/vc/JDlWXnedjhR5Z9MiiRxY9suiRRY8semRp6TE97xlry5gW7vv0WNfSo+cYLm1Xj3V6ZNEjix5Z9MiiRxY9sujxOT3v+qaG7erR51PPPvToo0cWPbLokUWPLHpk0SOLHln0yKJHFj2y6JFFjyx6ZNFj2Z7/HG15l9FjZI/HGq+v1v7WAv/MyB68T48semTp6TE/zxPN31/T7heuUbd+n5885sHHBgAAGOsOT8M6qQ==
   </data>
  </layer>
+ <objectgroup name="Camada de Objetos 1" visible="0">
+  <object id="1" x="-8" y="1478" width="838.667" height="52"/>
+  <object id="2" x="1025.33" y="1448" width="190.667" height="52"/>
+ </objectgroup>
 </map>
