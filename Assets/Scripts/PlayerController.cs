@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            if (!flying && body.velocity.magnitude < 2f)
+            if (!flying && body.velocity.magnitude < 4f)
             {
                 body.velocity += Vector2.right;
                 grounded = true;
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            if (!flying && body.velocity.magnitude < 2f)
+            if (!flying && body.velocity.magnitude < 4f)
             {
                 grounded = true;
                 anim.SetBool("walk", true);
