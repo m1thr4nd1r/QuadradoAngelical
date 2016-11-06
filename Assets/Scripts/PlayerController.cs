@@ -2,20 +2,17 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-
-    Animator anim;
+    
     Vector2 flyingVelocity;
     int speed;
     Rigidbody2D body;
-    bool flying, wallJump, grounded;
+    bool flying, wallJump;
     int jumpCount;
 
 	// Use this for initialization
 	void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
-        anim = gameObject.GetComponent<Animator>();
         flying = false;
-        grounded = true;
         wallJump = false;
         jumpCount = 0;
         speed = 0;
@@ -31,13 +28,9 @@ public class PlayerController : MonoBehaviour {
         {
             jumpCount++;
             flying = (jumpCount > 1) ? true : false;
-            grounded = false;
 
             if (!flying)
-            {
-                anim.SetBool("walk", false);
-                body.velocity += Vector2.up * 3.5f;
-            }
+                body.velocity += Vector2.up * 2;
             else
             {
                 jumpCount = 0;
@@ -47,46 +40,33 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            if (!flying && body.velocity.magnitude < 4f)
-            {
+            if (!flying && body.velocity.magnitude < 2f)
                 body.velocity += Vector2.right;
-                grounded = true;
-                anim.SetBool("walk", true);
-            }
             else if (Camera.main.WorldToScreenPoint(transform.position).x <= Screen.width / 2 && wallJump)
             {
                 transform.Rotate(Vector3.up * 180);
-                grounded = false;
                 flying = true;
                 flyingVelocity.Set(-flyingVelocity.x, flyingVelocity.y);
                 body.velocity = flyingVelocity;
             }
         }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            if (!flying && body.velocity.magnitude < 4f)
-            {
-                grounded = true;
-                anim.SetBool("walk", true);
+            if (!flying && body.velocity.magnitude < 2f)
                 body.velocity += Vector2.left;
-            }
             else if (Camera.main.WorldToScreenPoint(transform.position).x > Screen.width / 2 && wallJump)
             {
                 transform.Rotate(Vector3.up * 180);
                 flying = true;
-                grounded = false;
                 flyingVelocity.Set(-flyingVelocity.x, flyingVelocity.y);
                 body.velocity = flyingVelocity;
             }
         }
 
-        if (body.velocity.SqrMagnitude() < 0.2f)
-            anim.SetBool("walk", false);
-
-        anim.SetBool("jump", !grounded);
+        //body.velocity = speed;
         body.gravityScale = (flying) ? 0 : 1;
 
-        print(grounded);
         //print((Screen.width / 2) + "|" + ;
         //print("Flying: " + flying + "\nCalc: " + (transform.position.x <= Screen.width / 2) + "\nWallJump: " + wallJump);
         //print("Velocity: " + body.velocity + "\nGravity: " + body.gravityScale + "\nFlying: " + flying + "\nCalc: " + (transform.position.x > Screen.width / 2));
@@ -104,7 +84,6 @@ public class PlayerController : MonoBehaviour {
         {
             jumpCount = 0;
             flyingVelocity.Set(2.5f, 0.5f);
-            grounded = true;
         }
     }
 
