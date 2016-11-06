@@ -41,10 +41,15 @@
     <object id="0" x="-76" y="-35" width="131" height="88"/>
    </objectgroup>
   </tile>
+  <tile id="11">
+   <objectgroup draworder="index">
+    <object id="0" x="0.0909091" y="0" width="15.9091" height="15.9091"/>
+   </objectgroup>
+  </tile>
  </tileset>
  <layer name="Camada de Tiles 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt290NgjAYhtEvwUTGchRHcRRHcTRNvBVSasU3ek7SW1p4LvivAgAAAAAAAAAAAAAAAAAAAAAAAABghLnqdqw67TUe852/vc/JDlWXnedjhR5Z9MiiRxY9suiRRY8semRp6TE97xlry5gW7vv0WNfSo+cYLm1Xj3V6ZNEjix5Z9MiiRxY9sujxOT3v+qaG7erR51PPPvToo0cWPbLokUWPLHpk0SOLHln0yKJHFj2y6JFFjyx6ZNFj2Z7/HG15l9FjZI/HGq+v1v7WAv/MyB68T48semTp6TE/zxPN31/T7heuUbd+n5885sHHBgAAGOsOT8M6qQ==
+   eJzt21tOwzAQQNGB8MgHi2IpLIWlsBSW1kjl19XUOM5AzpH8l0frK7VK4kQAAAAAAAAAAAAAAAAAAAAAAAAAADDCGvH9GvE+a2zn+zj6O1f2FPE5+XzcoEctetSiRy161KJHLXrUokctmR7L9Zox7hlL47rvqB5vP6O6TI+eOWwdV4/bztaj+v2aM/U48vxZetSiRy161KJHLXrsp+dZ35I4rh599rr3oUcfPdr00EOPNj300KNNDz30aNNDDz3a9NBDjzY99NCjTY+aPZaIr1nvHmWeZfQY2aM1H7/6gAl/Ye1V1sgeR9Gjdo+HbTwm9stuN9N/7PG8jZfEftntZurpsV7/J9Lrr/d29t+rau5dn195rIPnBgAAGOsCMHI82w==
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" visible="0">
