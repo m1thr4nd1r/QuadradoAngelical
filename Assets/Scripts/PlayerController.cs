@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
+    TextMesh ui;
     Animator anim;
     Vector2 flyingVelocity;
     int speed;
@@ -14,19 +16,25 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
+        ui = gameObject.GetComponentInChildren<TextMesh>();
         flying = false;
         grounded = true;
         wallJump = false;
         jumpCount = 0;
         speed = 0;
-        flyingVelocity = new Vector2(2.5f, 0.5f);
+        flyingVelocity = new Vector2(2.5f, 1.5f);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        ui.text = "Tempo: " + Time.fixedTime;
+        ui.gameObject.transform.lossyScale.Set(1, 1, 1);
+        Camera.main.gameObject.transform.lossyScale.Set(1, 1, 1);
         //speed = new Vector2( Mathf.Clamp(speed.x * 0.1f, 0, 2f), Mathf.Clamp( speed.y * 0.1f, 0, 2f));
-        
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(0);            
+
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpCount++;
@@ -47,6 +55,8 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
+            transform.localScale = Vector3.one;
+
             if (!flying && body.velocity.magnitude < 2f)
             {
                 body.velocity += Vector2.right;
@@ -55,15 +65,17 @@ public class PlayerController : MonoBehaviour {
             }
             else if (Camera.main.WorldToScreenPoint(transform.position).x <= Screen.width / 2 && wallJump)
             {
-                transform.Rotate(Vector3.up * 180);
                 grounded = false;
                 flying = true;
                 flyingVelocity.Set(-flyingVelocity.x, flyingVelocity.y);
                 body.velocity = flyingVelocity;
             }
         }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
+            transform.localScale = (Vector3.right * -2) + Vector3.one;
+
             if (!flying && body.velocity.magnitude < 2f)
             {
                 grounded = true;
@@ -72,7 +84,6 @@ public class PlayerController : MonoBehaviour {
             }
             else if (Camera.main.WorldToScreenPoint(transform.position).x > Screen.width / 2 && wallJump)
             {
-                transform.Rotate(Vector3.up * 180);
                 flying = true;
                 grounded = false;
                 flyingVelocity.Set(-flyingVelocity.x, flyingVelocity.y);
@@ -86,7 +97,7 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool("jump", !grounded);
         body.gravityScale = (flying) ? 0 : 1;
 
-        print(grounded);
+        //print(grounded);
         //print((Screen.width / 2) + "|" + ;
         //print("Flying: " + flying + "\nCalc: " + (transform.position.x <= Screen.width / 2) + "\nWallJump: " + wallJump);
         //print("Velocity: " + body.velocity + "\nGravity: " + body.gravityScale + "\nFlying: " + flying + "\nCalc: " + (transform.position.x > Screen.width / 2));
@@ -94,9 +105,10 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.name.Contains("Wall"))
+        if (coll.gameObject.name.Contains("Collision"))
         {
             flying = false;
+            flyingVelocity.Set(2.5f, 0.5f);
             body.velocity = Vector2.zero;
         }
 
@@ -111,13 +123,15 @@ public class PlayerController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D coll)
     {
         print("<color=green>" + coll.name + "</color>");
-        if (coll.name.Equals("Wall"))
+        if (coll.name.Equals("Collision"))
             wallJump = true;
+        if (coll.transform.tag.Equals("End"))
+            Time.timeScale = 0;
     }
 
     void OnTriggerExit2D(Collider2D coll)
     {
-        if (coll.name.Equals("Wall"))
+        if (coll.name.Equals("Collision"))
             wallJump = false;
     }
 }
