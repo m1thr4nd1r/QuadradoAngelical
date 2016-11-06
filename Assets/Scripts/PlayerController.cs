@@ -114,9 +114,10 @@ public class PlayerController : MonoBehaviour {
 
         if (coll.gameObject.tag.Equals("Obstacle"))
         {
-            jumpCount = 0;
-            flyingVelocity.Set(2.5f, 0.5f);
-            grounded = true;
+            Time.timeScale = 0;
+            //jumpCount = 0;
+            //flyingVelocity.Set(2.5f, 0.5f);
+            //grounded = true;
         }
     }
 
