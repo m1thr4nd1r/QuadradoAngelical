@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-    TextMesh ui;
+    Text ui;
     Animator anim;
     Vector2 flyingVelocity;
     int speed;
@@ -16,7 +17,8 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
-        ui = gameObject.GetComponentInChildren<TextMesh>();
+        ui = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<Text>();
+		print(ui);
         flying = false;
         grounded = true;
         wallJump = false;
@@ -28,14 +30,21 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        ui.text = "Tempo: " + Time.fixedTime;
-        ui.gameObject.transform.lossyScale.Set(1, 1, 1);
-        Camera.main.gameObject.transform.lossyScale.Set(1, 1, 1);
-        //speed = new Vector2( Mathf.Clamp(speed.x * 0.1f, 0, 2f), Mathf.Clamp( speed.y * 0.1f, 0, 2f));
-        if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadScene(0);            
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			SceneManager.LoadScene(0);
+			Time.timeScale = 1;
+		}
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+		//speed = new Vector2( Mathf.Clamp(speed.x * 0.1f, 0, 2f), Mathf.Clamp( speed.y * 0.1f, 0, 2f));
+		ui.text = "Tempo: " + Time.timeSinceLevelLoad;
+
+		Vector3 camPos = new Vector3(transform.position.x,
+									 transform.position.y + 0.8f,
+									 -10f);
+		Camera.main.gameObject.transform.position = camPos;
+
+		if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpCount++;
             flying = (jumpCount > 1) ? true : false;
@@ -75,6 +84,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             transform.localScale = (Vector3.right * -2) + Vector3.one;
+			print(wallJump + "|" + Camera.main.WorldToScreenPoint(transform.position).x + "|" +  Screen.width / 2);
 
             if (!flying && body.velocity.magnitude < 2f)
             {
@@ -82,7 +92,7 @@ public class PlayerController : MonoBehaviour {
                 anim.SetBool("walk", true);
                 body.velocity += Vector2.left;
             }
-            else if (Camera.main.WorldToScreenPoint(transform.position).x > Screen.width / 2 && wallJump)
+            else if (Camera.main.WorldToScreenPoint(transform.position).x >= Screen.width / 2 && wallJump)
             {
                 flying = true;
                 grounded = false;
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour {
             body.velocity = Vector2.zero;
         }
 
-        if (coll.gameObject.tag.Equals("Obstacle"))
+        if (coll.gameObject.tag.Equals("Enemy"))
         {
             Time.timeScale = 0;
             //jumpCount = 0;
